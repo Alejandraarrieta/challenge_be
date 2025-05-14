@@ -28,7 +28,7 @@ Este comando levanta todos los servicios necesarios, crea la base de datos y las
 Usá los siguientes comandos para correr la aplicación localmente con tu entorno:
 
 ```bash
-make start-db     # Inicia PostgreSQL y Redis usando docker-compose
+make start_db     # Inicia PostgreSQL y Redis usando docker-compose
 make run          # Corre la aplicación Go en modo local
 ```
 
