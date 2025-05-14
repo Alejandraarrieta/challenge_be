@@ -70,6 +70,10 @@ Una vez levantado el servicio, podés acceder a la documentación Swagger desde:
 
 La solución está basada en una arquitectura Hexagonal (Ports & Adapters). Esta arquitectura permite separar claramente el dominio de la aplicación (lógica de negocio) de las interfaces externas (como HTTP, bases de datos y otros servicios). De esta forma, la aplicación es flexible y fácil de escalar.
 
+## 🔎 Podés ver el 
+
+[diagrama de arquitectura completo en la Wiki](https://github.com/Alejandraarrieta/challenge_be/wiki).
+
 ### Componentes principales
 
 - **Dominio**: Contiene las entidades y las reglas de negocio.
