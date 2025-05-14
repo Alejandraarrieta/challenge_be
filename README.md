@@ -3,6 +3,7 @@
 Este desafío consiste en desarrollar una versión simplificada de una plataforma de microblogging similar a Twitter, donde los usuarios pueden publicar tweets, seguir a otros usuarios y ver un timeline personalizado de los tweets de las personas a las que siguen.
 
 ## 🧩 Tecnologías utilizadas
+
 - **Lenguaje**: Go (Golang)
 - **Arquitectura**: Hexagonal (Ports & Adapters)
 - **Base de Datos**: PostgreSQL
@@ -18,14 +19,10 @@ Este desafío consiste en desarrollar una versión simplificada de una plataform
 
 ```bash
 docker-compose up --build
+```
 Este comando levanta todos los servicios necesarios, crea la base de datos y las tablas (API + PostgreSQL + Redis) y expone el servicio en http://localhost:8080.
-
 Opción 2: Makefile
-Usa los siguientes comandos para correr la aplicación localmente con tu entorno:
-
-bash
-Copiar
-Editar
+Usá los siguientes comandos para correr la aplicación localmente con tu entorno:
 make start-db     # Inicia PostgreSQL y Redis usando docker-compose
 make run          # Corre la aplicación Go en modo local
 Base de datos
@@ -35,10 +32,9 @@ Tablas
 Las tablas se encuentran en challenge_be/postgres-init/ddl-challenge-be.sql.
 
 🧪 Ejecutar tests
-bash
-Copiar
-Editar
+```bash
 make test
+```
 📚 Documentación de la API
 Una vez levantado el servicio, podés acceder a la documentación Swagger desde:
 
@@ -67,7 +63,7 @@ Para más detalles, ver el archivo business.txt.
 🏗️ Arquitectura de Alto Nivel
 La solución está basada en una arquitectura Hexagonal (Ports & Adapters). Esta arquitectura permite separar claramente el dominio de la aplicación (lógica de negocio) de las interfaces externas (como HTTP, bases de datos y otros servicios). De esta forma, la aplicación es flexible y fácil de escalar.
 
-Componentes principales:
+Componentes principales
 Dominio: Contiene las entidades y las reglas de negocio.
 
 Aplicación: Define los casos de uso y coordina la interacción entre el dominio y las interfaces.
@@ -76,7 +72,7 @@ Infraestructura: Implementa los detalles concretos, como las conexiones a bases 
 
 Interfaces: Exponen la API HTTP para interactuar con la aplicación.
 
-Elección de Tecnología
+⚙️ Elección de Tecnología
 Go (Golang)
 
 PostgreSQL: Base de datos relacional para almacenar tweets y follow.
@@ -95,9 +91,7 @@ ElastiCache (Redis)
 CloudWatch para logs y métricas
 
 📂 Estructura del proyecto
-bash
-Copiar
-Editar
+```bash
 ├── cmd/                # Entrada principal de la aplicación
 ├── internal/
 │   ├── domain/         # Entidades y contratos del dominio
@@ -108,5 +102,5 @@ Editar
 ├── docker/             # Dockerfiles, compose y configuraciones
 ├── Makefile
 └── README.md
-Copiar
-Editar
+```
+
