@@ -19,9 +19,6 @@ func RegisterRoutes(router *gin.Engine, usecases *usecases.UseCases) {
 		{
 			tweetGroup.POST("/", tweet.NewCreateTweetHandler(usecases.CreateTweetUseCase))
 			tweetGroup.GET("/timeline/:user_id", tweet.NewGetTimelineHandler(usecases.GetTimelineUseCase))
-
-			// Agregá tus rutas acá, por ejemplo:
-			// api.GET("/users", handlers.GetUsers)
 		}
 		followGroup := api.Group("/follows")
 		{
