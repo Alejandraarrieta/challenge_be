@@ -20,87 +20,89 @@ Este desafío consiste en desarrollar una versión simplificada de una plataform
 ```bash
 docker-compose up --build
 ```
-Este comando levanta todos los servicios necesarios, crea la base de datos y las tablas (API + PostgreSQL + Redis) y expone el servicio en http://localhost:8080.
-Opción 2: Makefile
+
+Este comando levanta todos los servicios necesarios, crea la base de datos y las tablas (API + PostgreSQL + Redis) y expone el servicio en [http://localhost:8080](http://localhost:8080).
+
+### Opción 2: Makefile
+
 Usá los siguientes comandos para correr la aplicación localmente con tu entorno:
+
+```bash
 make start-db     # Inicia PostgreSQL y Redis usando docker-compose
 make run          # Corre la aplicación Go en modo local
-Base de datos
-Crea una base de datos llamada challenge_db.
+```
 
-Tablas
-Las tablas se encuentran en challenge_be/postgres-init/ddl-challenge-be.sql.
+### Base de datos
 
-🧪 Ejecutar tests
+Crear una base de datos llamada `challenge_db`.
+
+### Tablas
+
+Las tablas que deberas crear se encuentran en `challenge_be/postgres-init/ddl-challenge-be.sql`.
+
+## 🧪 Ejecutar tests
+
 ```bash
 make test
 ```
-📚 Documentación de la API
+
+## 📚 Documentación de la API
+
 Una vez levantado el servicio, podés acceder a la documentación Swagger desde:
 
-http://localhost:8080/swagger/index.html
+[http://localhost:8080/swagger/index.html](http://localhost:8080/swagger/index.html)
 
-🚀 Funcionalidades implementadas
-Publicar un tweet: POST /tweets
+## 🚀 Funcionalidades implementadas
 
-Seguir a otro usuario: POST /follow
+- **Publicar un tweet**: `POST /tweets`
+- **Seguir a otro usuario**: `POST /follow`
+- **Ver homeTimeline de un usuario**: `GET /timeline/{user_id}`
 
-Ver homeTimeline de un usuario: GET /timeline/{user_id}
+## 📌 Supuestos
 
-📌 Supuestos
-No hay login: Se asume que los user_id recibidos son válidos.
+- No hay login: Se asume que los `user_id` recibidos son válidos.
+- Los identificadores de usuario pueden recibirse por header, parámetro o body.
+- La aplicación fue pensada para escalar a millones de usuarios, priorizando la lectura.
+- No se contempló `unfollow`, `likes` ni `replies` en esta etapa.
+- Redis es utilizado para cachear timelines y mejorar la velocidad de lectura.
 
-Los identificadores de usuario pueden recibirse por header, parámetro o body.
+## 🏗️ Arquitectura de Alto Nivel
 
-La aplicación fue pensada para escalar a millones de usuarios, priorizando la lectura.
-
-No se contempló unfollow, likes ni replies en esta etapa.
-
-Redis es utilizado para cachear timelines y mejorar la velocidad de lectura.
-
-Para más detalles, ver el archivo business.txt.
-
-🏗️ Arquitectura de Alto Nivel
 La solución está basada en una arquitectura Hexagonal (Ports & Adapters). Esta arquitectura permite separar claramente el dominio de la aplicación (lógica de negocio) de las interfaces externas (como HTTP, bases de datos y otros servicios). De esta forma, la aplicación es flexible y fácil de escalar.
 
-Componentes principales
-Dominio: Contiene las entidades y las reglas de negocio.
+### Componentes principales
 
-Aplicación: Define los casos de uso y coordina la interacción entre el dominio y las interfaces.
+- **Dominio**: Contiene las entidades y las reglas de negocio.
+- **Aplicación**: Define los casos de uso y coordina la interacción entre el dominio y las interfaces.
+- **Infraestructura**: Implementa los detalles concretos, como las conexiones a bases de datos, Redis y los adaptadores externos.
+- **Interfaces**: Exponen la API HTTP para interactuar con la aplicación.
 
-Infraestructura: Implementa los detalles concretos, como las conexiones a bases de datos, Redis y los adaptadores externos.
+## ⚙️ Elección de Tecnología
 
-Interfaces: Exponen la API HTTP para interactuar con la aplicación.
+- **Go (Golang)**
+- **PostgreSQL**: Base de datos relacional para almacenar tweets y follow.
+- **Redis**: Usado como cache para optimizar la lectura.
+- **Docker y AWS ECS**: Utilizados para facilitar el despliegue y la escalabilidad de la aplicación.
 
-⚙️ Elección de Tecnología
-Go (Golang)
+## ☁️ Despliegue en AWS
 
-PostgreSQL: Base de datos relacional para almacenar tweets y follow.
-
-Redis: Usado como cache para optimizar la lectura.
-
-Docker y AWS ECS: Utilizados para facilitar el despliegue y la escalabilidad de la aplicación.
-
-☁️ Despliegue en AWS
 El proyecto está dockerizado y preparado para ser desplegado en AWS ECS. Puede adaptarse fácilmente a EC2 o EKS según necesidades. También puede integrarse con servicios como:
 
-RDS (PostgreSQL)
+- **RDS (PostgreSQL)**
+- **ElastiCache (Redis)**
+- **CloudWatch** para logs y métricas
 
-ElastiCache (Redis)
+## 📂 Estructura del proyecto
 
-CloudWatch para logs y métricas
-
-📂 Estructura del proyecto
 ```bash
 ├── cmd/                # Entrada principal de la aplicación
 ├── internal/
-│   ├── domain/         # Entidades y contratos del dominio
-│   ├── application/    # Casos de uso
-│   ├── infrastructure/ # Repositorios, Redis, adaptadores externos
-│   └── interfaces/     # Handlers HTTP
+│   ├── domain/         
+│   ├── usecases/       
+│   ├── adapters/       
+│   └── platform/       
 ├── docs/               # Swagger y documentación
 ├── docker/             # Dockerfiles, compose y configuraciones
 ├── Makefile
 └── README.md
 ```
-
