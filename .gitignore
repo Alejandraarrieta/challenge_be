@@ -1,0 +1,5 @@
+# Environmanet variables file
+.env
+.dump.rdb
+.main.go
+.env.docker

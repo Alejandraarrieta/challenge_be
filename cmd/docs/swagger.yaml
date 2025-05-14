@@ -1,0 +1,79 @@
+swagger: "2.0"
+info:
+  title: "API Documentation"
+  version: "1.0.0"
+  contact: {}
+
+definitions:
+  domain.Tweet:
+    type: object
+    properties:
+      id:
+        type: integer
+      content:
+        type: string
+      created_at:
+        type: string
+      user_id:
+        type: integer
+
+  follow.InputCreateFollow:
+    type: object
+    properties:
+      followeeID:
+        type: integer
+      followerID:
+        type: integer
+    required:
+      - followeeID
+      - followerID
+
+  tweet.InputCreateTweet:
+    type: object
+    properties:
+      content:
+        type: string
+      user_id:
+        type: integer
+    required:
+      - content
+      - user_id
+
+paths:
+  /api/tweets/:
+    post:
+      summary: Crear un tweet
+      description: Crea un nuevo tweet de hasta 280 caracteres
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: tweet
+          description: Datos del tweet
+          required: true
+          schema:
+            $ref: '#/definitions/tweet.InputCreateTweet'
+      responses:
+        "201":
+          description: Created
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: object
+            additionalProperties:
+              type: string
+      tags:
+        - tweets
+
