@@ -10,7 +10,7 @@ Este desafío consiste en desarrollar una versión simplificada de una plataform
 - **Cache**: Redis
 - **Documentación de la API**: Swagger (OpenAPI)
 - **Contenedores**: Docker
-- **Despliegue**: Amazon Web Services (ECS)
+- **Despliegue**: Amazon Web Services (EC2)
 - **Testing**: Unit tests
 
 ## 🚀 API Desplegada ☁️ AWS
