@@ -13,7 +13,7 @@ Este desafío consiste en desarrollar una versión simplificada de una plataform
 - **Despliegue**: Amazon Web Services (ECS)
 - **Testing**: Unit tests
 
-## 🚀 API Desplegada ☁️ Despliegue en AWS
+## 🚀 API Desplegada ☁️ AWS
 
 📝 Nota: esta instancia EC2 puede estar disponible temporalmente solo para la evaluación de la prueba técnica.
 
@@ -25,7 +25,7 @@ Esta URL corresponde al endpoint que devuelve el timeline de un usuario (en este
 
 ## 🔧 Pruebas con cURL
 
-# 📥 Crear un tweet
+### 📥 Crear un tweet
 
 ```bash
 curl -X POST http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/tweets/ \
@@ -35,7 +35,7 @@ curl -X POST http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/tweets/ \
     "content": "Este es un tweet de prueba desde curl"
 }'
 ```
-# 👤 Hacer follow a otro usuario
+### 👤 Hacer follow a otro usuario
 
 ```bash
 curl -X POST http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/follows/ \
@@ -45,7 +45,7 @@ curl -X POST http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/follows/ \
     "followee_id": 3
 }'
 ```
-# 📰 Obtener timeline del usuario 1
+### 📰 Obtener timeline del usuario 1
 
 ```bash
 curl http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/tweets/timeline/1
