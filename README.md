@@ -13,9 +13,52 @@ Este desafío consiste en desarrollar una versión simplificada de una plataform
 - **Despliegue**: Amazon Web Services (ECS)
 - **Testing**: Unit tests
 
+## 🚀 API Desplegada ☁️ Despliegue en AWS
+
+📝 Nota: esta instancia EC2 puede estar disponible temporalmente solo para la evaluación de la prueba técnica.
+
+La API está desplegada y disponible para pruebas en el siguiente endpoint:
+
+👉 [http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/tweets/timeline/1](http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/tweets/timeline/1)
+
+Esta URL corresponde al endpoint que devuelve el timeline de un usuario (en este caso, el usuario con ID 1).
+
+## 🔧 Pruebas con cURL
+
+# 📥 Crear un tweet
+
+```bash
+curl -X POST http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/tweets/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "user_id": 2,
+    "content": "Este es un tweet de prueba desde curl"
+}'
+```
+# 👤 Hacer follow a otro usuario
+
+```bash
+curl -X POST http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/follows/ \
+  -H "Content-Type: application/json" \
+  -d '{
+    "follower_id": 1,
+    "followee_id": 3
+}'
+```
+# 📰 Obtener timeline del usuario 1
+
+```bash
+curl http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/api/tweets/timeline/1
+```
+## 📄 Documentación Swagger
+
+Podés acceder a la documentación interactiva de la API aquí:
+👉 [http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/swagger/index.html](http://ec2-3-83-254-232.compute-1.amazonaws.com:8080/swagger/index.html)
+
+
 ## 📦 Cómo levantar el proyecto
 
-### Opción 1: Docker (recomendado)
+### Opción 1: Docker
 
 ```bash
 docker-compose up --build
@@ -85,14 +128,6 @@ La solución está basada en una arquitectura Hexagonal (Ports & Adapters). Esta
 - **PostgreSQL**: Base de datos relacional para almacenar tweets y follow.
 - **Redis**: Usado como cache para optimizar la lectura.
 - **Docker y AWS ECS**: Utilizados para facilitar el despliegue y la escalabilidad de la aplicación.
-
-## ☁️ Despliegue en AWS
-
-El proyecto está dockerizado y preparado para ser desplegado en AWS ECS. Puede adaptarse fácilmente a EC2 o EKS según necesidades. También puede integrarse con servicios como:
-
-- **RDS (PostgreSQL)**
-- **ElastiCache (Redis)**
-- **CloudWatch** para logs y métricas
 
 ## 📂 Estructura del proyecto
 
