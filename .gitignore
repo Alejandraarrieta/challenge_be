@@ -1,5 +1,5 @@
 # Environmanet variables file
 .env
-.dump.rdb
+dump.rdb
 .main.go
 .env.docker

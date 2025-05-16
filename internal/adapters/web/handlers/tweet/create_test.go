@@ -90,4 +90,26 @@ func TestNewCreateTweetHandler(t *testing.T) {
 		assert.Equal(t, http.StatusInternalServerError, w.Code)
 		assert.Contains(t, w.Body.String(), "Failed to create tweet")
 	})
+
+	t.Run("should return 400 when required fields are missing", func(t *testing.T) {
+		ctrl := gomock.NewController(t)
+		defer ctrl.Finish()
+
+		mockUseCase := mocks.NewMockCreateUseCase(ctrl)
+		handler := tweet.NewCreateTweetHandler(mockUseCase)
+
+		// Falta el campo "content"
+		inputJSON := `{"user_id": 123}`
+
+		req := httptest.NewRequest(http.MethodPost, "/tweets", bytes.NewBufferString(inputJSON))
+		req.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+
+		r := gin.New()
+		r.POST("/tweets", handler)
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+		assert.Contains(t, w.Body.String(), `"Content":"El campo es requerido"`)
+	})
 }

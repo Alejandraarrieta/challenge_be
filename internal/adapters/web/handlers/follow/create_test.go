@@ -94,4 +94,26 @@ func TestNewCreateFollowHandler(t *testing.T) {
 		assert.Equal(t, http.StatusInternalServerError, w.Code)
 		assert.Contains(t, w.Body.String(), "Failed to create follow")
 	})
+
+	t.Run("should return 400 when required fields are missing", func(t *testing.T) {
+		ctrl := gomock.NewController(t)
+		defer ctrl.Finish()
+
+		mockUseCase := mocks.NewMockCreateUseCase(ctrl)
+		handler := follow.NewCreateFollowHandler(mockUseCase)
+
+		// Falta el campo "followee_id"
+		inputJSON := `{"follower_id": 123}`
+
+		req := httptest.NewRequest(http.MethodPost, "/follows", bytes.NewBufferString(inputJSON))
+		req.Header.Set("Content-Type", "application/json")
+		w := httptest.NewRecorder()
+
+		r := gin.New()
+		r.POST("/follows", handler)
+		r.ServeHTTP(w, req)
+
+		assert.Equal(t, http.StatusBadRequest, w.Code)
+		assert.Contains(t, w.Body.String(), `"FolloweeID":"El campo es requerido"`)
+	})
 }
