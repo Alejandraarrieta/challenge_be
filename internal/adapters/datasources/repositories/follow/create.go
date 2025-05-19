@@ -6,7 +6,7 @@ import (
 	errr "database/sql"
 )
 
-func (r *repository) Create(ctx context.Context, follow domain.Follow) error {
+func (r *repository) Create(ctx context.Context, follow *domain.Follow) error {
 	sql := `
 		INSERT INTO follows (follower_id, followee_id)
 		VALUES ($1, $2)

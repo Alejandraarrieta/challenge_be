@@ -110,6 +110,6 @@ func TestNewCreateTweetHandler(t *testing.T) {
 		r.ServeHTTP(w, req)
 
 		assert.Equal(t, http.StatusBadRequest, w.Code)
-		assert.Contains(t, w.Body.String(), `"Content":"El campo es requerido"`)
+		assert.Contains(t, w.Body.String(), `"Content":"Error en el campo: required"`)
 	})
 }

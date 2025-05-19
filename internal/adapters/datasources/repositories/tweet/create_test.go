@@ -91,7 +91,7 @@ func TestCreate(t *testing.T) {
 			}
 
 			repo := tweet.NewRepository(f.db)
-			id, err := repo.Create(context.Background(), tc.inputTweet)
+			id, err := repo.Create(context.Background(), &tc.inputTweet)
 
 			if tc.expectErr != nil {
 				assert.EqualError(t, err, tc.expectErr.Error())

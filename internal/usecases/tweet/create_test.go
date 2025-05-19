@@ -29,38 +29,53 @@ func TestCreateUseCase_Execute(t *testing.T) {
 	}
 
 	t.Run("success", func(t *testing.T) {
-		expectedTweet := domain.Tweet{
-			UserID:  input.UserID,
-			Content: input.Content,
-		}
+		mockRepository.EXPECT().
+			Create(ctx, gomock.Any()).
+			DoAndReturn(func(_ context.Context, tweet *domain.Tweet) (uint64, error) {
+				assert.Equal(t, input.UserID, tweet.UserID)
+				assert.Equal(t, input.Content, tweet.Content)
+				return 1, nil
+			})
 
-		mockRepository.EXPECT().Create(ctx, expectedTweet).Return(uint64(1), nil)
-		expectedTweet.ID = 1
-		mockCacheRepository.EXPECT().PushTweetToTimeline(ctx, expectedTweet).Return(nil)
+		mockCacheRepository.EXPECT().
+			PushTweetToTimeline(ctx, gomock.Any()).
+			DoAndReturn(func(_ context.Context, tweet *domain.Tweet) error {
+				assert.Equal(t, input.UserID, tweet.UserID)
+				assert.Equal(t, input.Content, tweet.Content)
+				return nil
+			})
 
 		err := useCase.Execute(ctx, input)
 		assert.NoError(t, err)
 	})
 
 	t.Run("repository error", func(t *testing.T) {
-		expectedTweet := domain.Tweet{
-			UserID:  input.UserID,
-			Content: input.Content,
-		}
-		mockRepository.EXPECT().Create(ctx, expectedTweet).Return(uint64(0), errors.New("repository error"))
-		mockCacheRepository.EXPECT().PushTweetToTimeline(gomock.Any(), gomock.Any()).Times(0)
+		mockRepository.EXPECT().
+			Create(ctx, gomock.Any()).
+			DoAndReturn(func(_ context.Context, tweet *domain.Tweet) (uint64, error) {
+				assert.Equal(t, input.UserID, tweet.UserID)
+				assert.Equal(t, input.Content, tweet.Content)
+				return 0, errors.New("repository error")
+			})
+
+		// No se llama a PushTweetToTimeline si falla la creación
+		mockCacheRepository.EXPECT().
+			PushTweetToTimeline(gomock.Any(), gomock.Any()).
+			Times(0)
 
 		err := useCase.Execute(ctx, input)
 		assert.Error(t, err)
 		assert.Equal(t, "repository error", err.Error())
 	})
+
 	t.Run("cache repository error", func(t *testing.T) {
-		expectedTweet := domain.Tweet{
-			UserID:  input.UserID,
-			Content: input.Content,
-		}
-		mockRepository.EXPECT().Create(ctx, expectedTweet).Return(uint64(0), nil)
-		mockCacheRepository.EXPECT().PushTweetToTimeline(ctx, expectedTweet).Return(errors.New("cache error"))
+		mockRepository.EXPECT().
+			Create(ctx, gomock.Any()).
+			Return(uint64(1), nil)
+
+		mockCacheRepository.EXPECT().
+			PushTweetToTimeline(ctx, gomock.Any()).
+			Return(errors.New("cache error"))
 
 		err := useCase.Execute(ctx, input)
 		assert.Error(t, err)

@@ -29,7 +29,7 @@ func TestCreateUseCase_Execute(t *testing.T) {
 	}
 
 	t.Run("success", func(t *testing.T) {
-		expectedFollow := domain.Follow{
+		expectedFollow := &domain.Follow{
 			FollowerID: input.FollowerID,
 			FolloweeID: input.FolloweeID,
 		}
@@ -42,7 +42,7 @@ func TestCreateUseCase_Execute(t *testing.T) {
 	})
 
 	t.Run("repository error", func(t *testing.T) {
-		expectedFollow := domain.Follow{
+		expectedFollow := &domain.Follow{
 			FollowerID: input.FollowerID,
 			FolloweeID: input.FolloweeID,
 		}
@@ -56,7 +56,7 @@ func TestCreateUseCase_Execute(t *testing.T) {
 	})
 
 	t.Run("cache repository error", func(t *testing.T) {
-		expectedFollow := domain.Follow{
+		expectedFollow := &domain.Follow{
 			FollowerID: input.FollowerID,
 			FolloweeID: input.FolloweeID,
 		}

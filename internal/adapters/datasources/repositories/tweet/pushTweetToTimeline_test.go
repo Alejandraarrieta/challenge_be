@@ -24,7 +24,7 @@ func TestPushTweetToTimeline(t *testing.T) {
 	mockClient := mocks.NewMockRedisClientInterface(ctrl)
 	repo := tweet.NewCacheRepository(mockClient)
 	ctx := context.Background()
-	testTweet := domain.Tweet{
+	testTweet := &domain.Tweet{
 		ID:     999,
 		UserID: 555,
 	}

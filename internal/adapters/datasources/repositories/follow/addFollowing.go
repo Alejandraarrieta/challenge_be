@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-func (r *cacheRepository) AddFollowing(ctx context.Context, follow domain.Follow) error {
+func (r *cacheRepository) AddFollowing(ctx context.Context, follow *domain.Follow) error {
 	key := fmt.Sprintf("user:%d:following", follow.FollowerID)
 	fmt.Printf("CACHE: Attempting to SAdd key: %s, member: %d\n", key, follow.FolloweeID)
 	err := r.client.SAdd(ctx, key, int64(follow.FolloweeID)).Err()

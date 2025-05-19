@@ -36,7 +36,7 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockRepository) Create(arg0 context.Context, arg1 domain.Follow) error {
+func (m *MockRepository) Create(arg0 context.Context, arg1 *domain.Follow) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -73,7 +73,7 @@ func (m *MockCacheRepository) EXPECT() *MockCacheRepositoryMockRecorder {
 }
 
 // AddFollowing mocks base method.
-func (m *MockCacheRepository) AddFollowing(arg0 context.Context, arg1 domain.Follow) error {
+func (m *MockCacheRepository) AddFollowing(arg0 context.Context, arg1 *domain.Follow) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "AddFollowing", arg0, arg1)
 	ret0, _ := ret[0].(error)

@@ -20,12 +20,12 @@ func TestCreate(t *testing.T) {
 	}
 
 	tests := map[string]struct {
-		inputFollow domain.Follow
+		inputFollow *domain.Follow
 		prepare     func(f *fields)
 		expectErr   error
 	}{
 		"when follow is created successfully": {
-			inputFollow: domain.Follow{
+			inputFollow: &domain.Follow{
 				FollowerID: 1,
 				FolloweeID: 2,
 			},
@@ -37,7 +37,7 @@ func TestCreate(t *testing.T) {
 			expectErr: nil,
 		},
 		"when query fails": {
-			inputFollow: domain.Follow{
+			inputFollow: &domain.Follow{
 				FollowerID: 5,
 				FolloweeID: 6,
 			},
@@ -49,7 +49,7 @@ func TestCreate(t *testing.T) {
 			expectErr: errors.New("query error"),
 		},
 		"when scan fails": {
-			inputFollow: domain.Follow{
+			inputFollow: &domain.Follow{
 				FollowerID: 7,
 				FolloweeID: 8,
 			},

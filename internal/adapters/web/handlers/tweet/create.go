@@ -33,16 +33,12 @@ func NewCreateTweetHandler(usecase tweet.CreateUseCase) gin.HandlerFunc {
 			validationErrors := err.(validator.ValidationErrors)
 			errs := make(map[string]string)
 			for _, e := range validationErrors {
-				errs[e.Field()] = "El campo es requerido"
+				errs[e.Field()] = "Error en el campo: " + e.Tag()
 			}
 			c.JSON(http.StatusBadRequest, gin.H{"validation_errors": errs})
 			return
 		}
 
-		if len(input.Content) > 280 {
-			c.JSON(http.StatusBadRequest, gin.H{"error": "El tweet no puede superar los 280 caracteres"})
-			return
-		}
 		if err := usecase.Execute(c.Request.Context(), input); err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create tweet"})
 			return

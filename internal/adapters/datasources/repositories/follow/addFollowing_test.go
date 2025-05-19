@@ -24,12 +24,12 @@ func TestAddFollowing(t *testing.T) {
 	ctx := context.Background()
 
 	tests := map[string]struct {
-		inputFollow domain.Follow
+		inputFollow *domain.Follow
 		prepareMock func()
 		expectErr   error
 	}{
 		"when followee is successfully added to the following set": {
-			inputFollow: domain.Follow{
+			inputFollow: &domain.Follow{
 				FollowerID: 100,
 				FolloweeID: 200,
 			},
@@ -42,7 +42,7 @@ func TestAddFollowing(t *testing.T) {
 			expectErr: nil,
 		},
 		"when Redis SAdd returns an error": {
-			inputFollow: domain.Follow{
+			inputFollow: &domain.Follow{
 				FollowerID: 300,
 				FolloweeID: 400,
 			},

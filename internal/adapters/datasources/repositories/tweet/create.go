@@ -5,7 +5,7 @@ import (
 	"context"
 )
 
-func (r *repository) Create(ctx context.Context, tweet domain.Tweet) (uint64, error) {
+func (r *repository) Create(ctx context.Context, tweet *domain.Tweet) (uint64, error) {
 	// Prepare the SQL statement with RETURNING id
 	query := "INSERT INTO tweets (user_id, content) VALUES ($1, $2) RETURNING id"
 	var id uint64

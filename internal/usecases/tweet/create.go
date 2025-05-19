@@ -23,7 +23,7 @@ func NewCreateUseCase(repository domain.Repository, cacheReposirory domain.Cache
 }
 
 func (c *createUseCase) Execute(ctx context.Context, input types.InputCreateTweet) error {
-	tweet := domain.Tweet{
+	tweet := &domain.Tweet{
 		UserID:  input.UserID,
 		Content: input.Content,
 	}

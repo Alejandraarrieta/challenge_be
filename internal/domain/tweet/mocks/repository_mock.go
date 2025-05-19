@@ -36,7 +36,7 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 }
 
 // Create mocks base method.
-func (m *MockRepository) Create(arg0 context.Context, arg1 domain.Tweet) (uint64, error) {
+func (m *MockRepository) Create(arg0 context.Context, arg1 *domain.Tweet) (uint64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Create", arg0, arg1)
 	ret0, _ := ret[0].(uint64)
@@ -119,7 +119,7 @@ func (mr *MockCacheRepositoryMockRecorder) GetTimeline(arg0, arg1 interface{}) *
 }
 
 // PushTweetToTimeline mocks base method.
-func (m *MockCacheRepository) PushTweetToTimeline(arg0 context.Context, arg1 domain.Tweet) error {
+func (m *MockCacheRepository) PushTweetToTimeline(arg0 context.Context, arg1 *domain.Tweet) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "PushTweetToTimeline", arg0, arg1)
 	ret0, _ := ret[0].(error)

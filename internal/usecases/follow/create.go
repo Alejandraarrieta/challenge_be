@@ -23,7 +23,7 @@ func NewCreateUseCase(repository domain.Repository, cacheReposirory domain.Cache
 }
 
 func (c *createUseCase) Execute(ctx context.Context, input types.InputCreateFollow) error {
-	follow := domain.Follow{
+	follow := &domain.Follow{
 		FollowerID: input.FollowerID,
 		FolloweeID: input.FolloweeID,
 	}
