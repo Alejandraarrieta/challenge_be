@@ -1,8 +1,8 @@
 package tweet
 
 import (
-	domain "challenge_be/internal/domain/tweet"
 	"challenge_be/internal/usecases/tweet"
+	"challenge_be/pkg/mapper"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -14,7 +14,7 @@ import (
 // @Tags tweets
 // @Produce json
 // @Param user_id path int true "ID del usuario"
-// @Success 200 {object} map[string][]domain.Tweet
+// @Success 200 {object} map[string][]types.TweetResponse
 // @Failure 400 {object} map[string]string
 // @Failure 500 {object} map[string]string
 // @Router /tweets/{user_id} [get]
@@ -36,11 +36,9 @@ func NewGetTimelineHandler(usecase tweet.GetTimelineUseCase) gin.HandlerFunc {
 			c.JSON(500, gin.H{"error": "Failed to get timeline"})
 			return
 		}
-		if len(tweets) == 0 {
-			c.JSON(200, gin.H{"tweets": []domain.Tweet{}})
-			return
-		}
-		c.JSON(200, gin.H{"tweets": tweets})
+
+		responses := mapper.MapTweetsToResponse(tweets)
+		c.JSON(200, gin.H{"tweets": responses})
 
 	}
 }
